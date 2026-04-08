@@ -1,4 +1,28 @@
-export default function DashboardPage() {
+function formatValue(value, unit) {
+  if (typeof value !== 'number') {
+    return '--';
+  }
+
+  return `${value} ${unit}`;
+}
+
+export default function DashboardPage({ data, isLoading, error }) {
+  const latestRecord = data[0];
+  const metrics = [
+    {
+      label: 'Voltage',
+      value: formatValue(latestRecord?.voltage, 'V')
+    },
+    {
+      label: 'Current',
+      value: formatValue(latestRecord?.current, 'A')
+    },
+    {
+      label: 'Temperature',
+      value: formatValue(latestRecord?.temperature, 'C')
+    }
+  ];
+
   return (
     <section className="page">
       <div className="hero-card">
@@ -9,13 +33,11 @@ export default function DashboardPage() {
             VoltineX gives teams a focused view of electrical health with a clean interface
             for real-time voltage, current, and temperature visibility.
           </p>
-          <div className="hero-actions">
-            <button type="button" className="primary-button">
-              View Overview
-            </button>
-            <button type="button" className="secondary-button">
-              System Status
-            </button>
+          <div className="hero-actions dashboard-status-row">
+            <div className="status-chip">{isLoading ? 'Loading data' : 'Live feed ready'}</div>
+            <div className="status-chip is-muted">
+              {error || (data.length ? `${data.length} records loaded` : 'No records available')}
+            </div>
           </div>
         </div>
 
@@ -23,42 +45,40 @@ export default function DashboardPage() {
           <div className="preview-panel">
             <div className="preview-header">
               <span>Live Preview</span>
-              <span>Idle</span>
+              <span>{latestRecord ? 'Connected' : 'Waiting'}</span>
             </div>
             <div className="preview-grid">
-              <div className="preview-tile">
-                <p className="preview-label">Voltage</p>
-                <p className="preview-value">231 V</p>
-              </div>
-              <div className="preview-tile">
-                <p className="preview-label">Current</p>
-                <p className="preview-value">14.2 A</p>
-              </div>
-              <div className="preview-tile">
-                <p className="preview-label">Temperature</p>
-                <p className="preview-value">46 C</p>
-              </div>
+              {metrics.map((metric) => (
+                <div key={metric.label} className="preview-tile">
+                  <p className="preview-label">{metric.label}</p>
+                  <p className="preview-value">{metric.value}</p>
+                </div>
+              ))}
             </div>
           </div>
         </aside>
       </div>
 
       <div className="stats-grid">
-        <article className="stat-card">
-          <p className="card-kicker">Uptime</p>
-          <h2 className="stat-value">99.2%</h2>
-          <p className="stat-label">Monitoring continuity across connected units.</p>
-        </article>
-        <article className="stat-card">
-          <p className="card-kicker">Coverage</p>
-          <h2 className="stat-value">24/7</h2>
-          <p className="stat-label">Always-on observation for operational confidence.</p>
-        </article>
-        <article className="stat-card">
-          <p className="card-kicker">Signals</p>
-          <h2 className="stat-value">3</h2>
-          <p className="stat-label">Voltage, current, and temperature in one flow.</p>
-        </article>
+        {metrics.map((metric) => (
+          <article key={metric.label} className="stat-card">
+            <p className="card-kicker">Reading</p>
+            <h2 className="stat-value">{metric.value}</h2>
+            <p className="stat-label">{metric.label}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="content-card readings-card">
+        <p className="card-kicker">Latest Data</p>
+        <div className="reading-list">
+          {metrics.map((metric) => (
+            <div key={metric.label} className="reading-row">
+              <span className="reading-name">{metric.label}</span>
+              <span className="reading-number">{metric.value}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
