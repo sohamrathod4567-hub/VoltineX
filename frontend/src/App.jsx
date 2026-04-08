@@ -46,11 +46,7 @@ export default function App() {
         }
       } catch (fetchError) {
         if (isMounted) {
-          if (fetchError.message === 'Failed to fetch data') {
-            setError('Unable to load transformer data');
-          } else {
-            setError('Connection unavailable');
-          }
+          setError(fetchError.message === 'Failed to fetch data' ? 'Unable to load transformer data' : 'Connection unavailable');
         }
       } finally {
         if (isMounted) {
@@ -110,6 +106,7 @@ export default function App() {
           <ActivePage />
         )}
       </main>
+      <footer className="site-footer">MADE BY : VoltineX Team</footer>
     </div>
   );
 }

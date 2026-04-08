@@ -8,6 +8,8 @@
   background: var(--white);
   color: var(--black);
   font-family: 'Lexend', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -40,6 +42,9 @@ textarea {
 .app-shell {
   min-height: 100vh;
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .navbar {
@@ -51,8 +56,8 @@ textarea {
   justify-content: space-between;
   gap: 20px;
   width: min(1120px, 100%);
-  margin: 0 auto 28px;
-  padding: 16px 18px;
+  margin: 0 auto;
+  padding: 16px 20px;
   border: 1px solid var(--light-grey);
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.88);
@@ -109,11 +114,12 @@ textarea {
 .page-shell {
   width: min(1120px, 100%);
   margin: 0 auto;
+  flex: 1;
 }
 
 .page {
   display: grid;
-  gap: 24px;
+  gap: 22px;
 }
 
 .hero-card,
@@ -130,7 +136,7 @@ textarea {
 .hero-card {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
-  gap: 24px;
+  gap: 28px;
   padding: 32px;
 }
 
@@ -252,7 +258,7 @@ textarea {
 
 .preview-grid {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .preview-tile {
@@ -280,7 +286,7 @@ textarea {
 .stats-grid,
 .chart-grid {
   display: grid;
-  gap: 20px;
+  gap: 18px;
 }
 
 .section-grid {
@@ -375,6 +381,17 @@ textarea {
 
 .chart-shell {
   height: 260px;
+}
+
+.site-footer {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 18px 20px 8px;
+  color: var(--grey);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .reading-list {
@@ -512,5 +529,10 @@ textarea {
   .nav-link {
     flex: 1 1 calc(50% - 10px);
     text-align: center;
+  }
+
+  .site-footer {
+    padding-top: 8px;
+    font-size: 0.82rem;
   }
 }
