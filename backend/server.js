@@ -1,12 +1,18 @@
-import express from "express";
-import dataRouter from "./routes/data.js";
+import express from 'express';
+import mongoose from 'mongoose';
+import dataRoutes from './routes/dataRoutes.js';
 
 const app = express();
-const port = process.env.PORT || 4174;
 
 app.use(express.json());
-app.use("/api", dataRouter);
+app.use('/api', dataRoutes);
 
-app.listen(port, () => {
-  console.log(`Voltinex backend listening on port ${port}`);
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
 });
+
+export async function connectDatabase() {
+  await mongoose.connect(process.env.MONGO_URI);
+}
+
+export default app;
