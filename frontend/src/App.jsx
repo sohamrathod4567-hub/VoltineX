@@ -25,6 +25,17 @@ export default function App() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showFlash, setShowFlash] = useState(true);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setShowFlash(false);
+    }, 1400);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -98,13 +109,16 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <div className={`landing-flash ${showFlash ? 'is-active' : 'is-hidden'}`} aria-hidden="true" />
       <Navbar items={pages} activePage={activePage} onNavigate={setActivePage} />
       <main className="page-shell">
-        {activePage === 'dashboard' ? (
-          <DashboardPage data={data} isLoading={isLoading} error={error} />
-        ) : (
-          <ActivePage />
-        )}
+        <div key={activePage} className="page-transition">
+          {activePage === 'dashboard' ? (
+            <DashboardPage data={data} isLoading={isLoading} error={error} />
+          ) : (
+            <ActivePage />
+          )}
+        </div>
       </main>
       <footer className="site-footer">MADE BY : VoltineX Team</footer>
     </div>

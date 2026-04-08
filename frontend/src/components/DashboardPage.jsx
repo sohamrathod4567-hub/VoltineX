@@ -128,6 +128,7 @@ export default function DashboardPage({ data, isLoading, error }) {
                   dataKey="voltage"
                   stroke="#000000"
                   strokeWidth={2}
+                  isAnimationActive={false}
                   dot={false}
                   activeDot={{ r: 4, fill: '#000000' }}
                 />
@@ -160,6 +161,7 @@ export default function DashboardPage({ data, isLoading, error }) {
                   dataKey="current"
                   stroke="#1c1c1c"
                   strokeWidth={2}
+                  isAnimationActive={false}
                   dot={false}
                   activeDot={{ r: 4, fill: '#1c1c1c' }}
                 />
