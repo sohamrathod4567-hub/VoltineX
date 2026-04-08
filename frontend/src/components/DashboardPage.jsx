@@ -34,7 +34,7 @@ export default function DashboardPage({ data, isLoading, error }) {
             for real-time voltage, current, and temperature visibility.
           </p>
           <div className="hero-actions dashboard-status-row">
-            <div className="status-chip">{isLoading ? 'Loading data' : 'Live feed ready'}</div>
+            <div className="status-chip">{isLoading ? 'Loading data' : 'Realtime updates on'}</div>
             <div className="status-chip is-muted">
               {error || (data.length ? `${data.length} records loaded` : 'No records available')}
             </div>

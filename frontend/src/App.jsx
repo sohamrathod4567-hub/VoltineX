@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
 import Navbar from './components/Navbar.jsx';
 import DashboardPage from './components/DashboardPage.jsx';
 import AboutPage from './components/AboutPage.jsx';
@@ -58,6 +59,38 @@ export default function App() {
 
     return () => {
       isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const socket = io('/', {
+      transports: ['websocket']
+    });
+
+    socket.on('newData', (record) => {
+      setData((currentData) => {
+        if (!record || typeof record !== 'object') {
+          return currentData;
+        }
+
+        const nextData = [
+          record,
+          ...currentData.filter((item) => item?.timestamp !== record.timestamp)
+        ];
+
+        return nextData;
+      });
+
+      setIsLoading(false);
+      setError('');
+    });
+
+    socket.on('connect_error', () => {
+      setError((currentError) => currentError || 'Realtime connection unavailable');
+    });
+
+    return () => {
+      socket.disconnect();
     };
   }, []);
 
