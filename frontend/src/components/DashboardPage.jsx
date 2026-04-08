@@ -1,3 +1,13 @@
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts';
+
 function formatValue(value, unit) {
   if (typeof value !== 'number') {
     return '--';
@@ -6,8 +16,32 @@ function formatValue(value, unit) {
   return `${value} ${unit}`;
 }
 
+function formatTick(timestamp, index) {
+  if (!timestamp) {
+    return `${index + 1}`;
+  }
+
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) {
+    return `${index + 1}`;
+  }
+
+  return date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
 export default function DashboardPage({ data, isLoading, error }) {
   const latestRecord = data[0];
+  const chartData = [...data]
+    .slice(0, 20)
+    .reverse()
+    .map((item, index) => ({
+      name: formatTick(item?.timestamp, index),
+      voltage: item?.voltage,
+      current: item?.current
+    }));
   const metrics = [
     {
       label: 'Voltage',
@@ -67,6 +101,72 @@ export default function DashboardPage({ data, isLoading, error }) {
             <p className="stat-label">{metric.label}</p>
           </article>
         ))}
+      </div>
+
+      <div className="chart-grid">
+        <article className="content-card chart-card">
+          <div className="chart-head">
+            <p className="card-kicker">Voltage</p>
+            <span className="chart-note">Last 20 readings</span>
+          </div>
+          <div className="chart-shell">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid stroke="#e9e9e9" vertical={false} />
+                <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: '#6f6f6f', fontSize: 12 }} />
+                <YAxis tickLine={false} axisLine={false} tick={{ fill: '#6f6f6f', fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #e9e9e9',
+                    borderRadius: '16px',
+                    color: '#000000'
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="voltage"
+                  stroke="#000000"
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 4, fill: '#000000' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </article>
+
+        <article className="content-card chart-card">
+          <div className="chart-head">
+            <p className="card-kicker">Current</p>
+            <span className="chart-note">Last 20 readings</span>
+          </div>
+          <div className="chart-shell">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid stroke="#e9e9e9" vertical={false} />
+                <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: '#6f6f6f', fontSize: 12 }} />
+                <YAxis tickLine={false} axisLine={false} tick={{ fill: '#6f6f6f', fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #e9e9e9',
+                    borderRadius: '16px',
+                    color: '#000000'
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="current"
+                  stroke="#1c1c1c"
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 4, fill: '#1c1c1c' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </article>
       </div>
 
       <div className="content-card readings-card">

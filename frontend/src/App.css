@@ -277,7 +277,8 @@ textarea {
 .section-grid,
 .component-grid,
 .contact-grid,
-.stats-grid {
+.stats-grid,
+.chart-grid {
   display: grid;
   gap: 20px;
 }
@@ -288,6 +289,10 @@ textarea {
 
 .stats-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.chart-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .component-grid {
@@ -349,6 +354,27 @@ textarea {
 .readings-card {
   display: grid;
   gap: 18px;
+}
+
+.chart-card {
+  display: grid;
+  gap: 18px;
+}
+
+.chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chart-note {
+  color: var(--grey);
+  font-size: 0.9rem;
+}
+
+.chart-shell {
+  height: 260px;
 }
 
 .reading-list {
