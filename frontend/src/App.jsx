@@ -109,7 +109,35 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <div className={`landing-flash ${showFlash ? 'is-active' : 'is-hidden'}`} aria-hidden="true" />
+      <div className={`landing-flash ${showFlash ? 'is-active' : 'is-hidden'}`} aria-hidden="true">
+        <div className="storm-glow" />
+        <svg className="thunder-overlay" viewBox="0 0 1440 900" preserveAspectRatio="none">
+          <path
+            className="thunder-bolt bolt-left"
+            d="M220 0 L180 150 L250 150 L170 340 L260 340 L120 620 L200 620 L90 900"
+          />
+          <path
+            className="thunder-bolt bolt-center"
+            d="M760 0 L700 180 L790 180 L680 390 L810 390 L620 700 L730 700 L650 900"
+          />
+          <path
+            className="thunder-bolt bolt-right"
+            d="M1150 0 L1080 130 L1160 130 L1030 330 L1140 330 L970 610 L1060 610 L960 900"
+          />
+          <path
+            className="thunder-branch branch-left"
+            d="M735 280 L640 360 L700 390"
+          />
+          <path
+            className="thunder-branch branch-center"
+            d="M1110 250 L1195 330 L1135 370"
+          />
+          <path
+            className="thunder-branch branch-right"
+            d="M210 280 L300 360 L235 395"
+          />
+        </svg>
+      </div>
       <Navbar items={pages} activePage={activePage} onNavigate={setActivePage} />
       <main className="page-shell">
         <div key={activePage} className="page-transition">
