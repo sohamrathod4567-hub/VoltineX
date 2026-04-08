@@ -85,12 +85,6 @@ textarea {
   gap: 10px;
 }
 
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 .nav-link {
   border: 1px solid transparent;
   border-radius: 999px;
@@ -115,37 +109,6 @@ textarea {
 .page-shell {
   width: min(1120px, 100%);
   margin: 0 auto;
-}
-
-.auth-shell {
-  min-height: calc(100vh - 48px);
-  display: grid;
-  place-items: center;
-}
-
-.auth-card {
-  width: min(460px, 100%);
-  padding: 32px;
-  border: 1px solid var(--light-grey);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.04);
-}
-
-.auth-switch {
-  display: flex;
-  gap: 10px;
-  margin: 24px 0 18px;
-}
-
-.auth-form {
-  display: grid;
-  gap: 14px;
-}
-
-.auth-error {
-  margin: 0;
-  color: var(--dark-grey);
 }
 
 .page {
@@ -544,12 +507,6 @@ textarea {
 
   .nav-links {
     width: 100%;
-  }
-
-  .nav-actions {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
   }
 
   .nav-link {

@@ -1,10 +1,9 @@
 import express from 'express';
 import Data from '../model/Data.js';
-import { authenticate } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/data', authenticate, async (req, res) => {
+router.get('/data', async (req, res) => {
   try {
     const data = await Data.find({}, { _id: 0 }).sort({ timestamp: -1 }).lean();
     res.json(data);
@@ -13,7 +12,7 @@ router.get('/data', authenticate, async (req, res) => {
   }
 });
 
-router.post('/data', authenticate, async (req, res) => {
+router.post('/data', async (req, res) => {
   try {
     const { voltage, current, temperature } = req.body;
 
