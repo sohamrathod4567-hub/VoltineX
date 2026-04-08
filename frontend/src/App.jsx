@@ -1,30 +1,34 @@
-import { useEffect, useState } from "react";
+import { useState } from 'react';
+import Navbar from './components/Navbar.jsx';
+import DashboardPage from './components/DashboardPage.jsx';
+import AboutPage from './components/AboutPage.jsx';
+import ComponentsPage from './components/ComponentsPage.jsx';
+import ContactPage from './components/ContactPage.jsx';
+
+const pages = [
+  { id: 'dashboard', label: 'Dashboard' },
+  { id: 'about', label: 'About' },
+  { id: 'components', label: 'Components' },
+  { id: 'contact', label: 'Contact' }
+];
+
+const pageMap = {
+  dashboard: DashboardPage,
+  about: AboutPage,
+  components: ComponentsPage,
+  contact: ContactPage
+};
 
 export default function App() {
-  const [status, setStatus] = useState("Connecting...");
-
-  useEffect(() => {
-    fetch("/api/status")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data?.status) {
-          setStatus("Backend connected");
-        }
-      })
-      .catch(() => {
-        setStatus("Backend unavailable");
-      });
-  }, []);
+  const [activePage, setActivePage] = useState('dashboard');
+  const ActivePage = pageMap[activePage];
 
   return (
-    <main className="app-shell">
-      <div className="panel">
-        <h1>VoltineX</h1>
-        <p className="subtitle">
-          React + Vite frontend connected to Express backend.
-        </p>
-        <div className="status">API status: {status}</div>
-      </div>
-    </main>
+    <div className="app-shell">
+      <Navbar items={pages} activePage={activePage} onNavigate={setActivePage} />
+      <main className="page-shell">
+        <ActivePage />
+      </main>
+    </div>
   );
 }
