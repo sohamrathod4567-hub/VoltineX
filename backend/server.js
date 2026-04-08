@@ -1,14 +1,16 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dataRoutes from './routes/dataRoutes.js';
+import express from "express";
+import mongoose from "mongoose";
+import dataRoutes from "./routes/dataRoutes.js";
 
 const app = express();
 
 app.use(express.json());
-app.use('/api', dataRoutes);
+app.use("/api", dataRoutes);
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
+  res
+    .status(err.status || 500)
+    .json({ error: err.message || "Internal server error" });
 });
 
 export async function connectDatabase() {
