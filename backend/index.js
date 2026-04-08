@@ -1,24 +1,24 @@
-import http from 'http';
-import { Server } from 'socket.io';
-import app, { connectDatabase } from './server.js';
+import http from "http";
+import { Server } from "socket.io";
+import app, { connectDatabase } from "./server.js";
 
 const port = process.env.PORT || 4174;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*'
-  }
+    origin: "*",
+  },
 });
 
-app.set('io', io);
+app.set("io", io);
 
-io.on('connection', (socket) => {
-  socket.on('disconnect', () => {});
+io.on("connection", (socket) => {
+  socket.on("disconnect", () => {});
 });
 
 async function start() {
   if (!process.env.MONGO_URI) {
-    throw new Error('MONGO_URI is not defined');
+    throw new Error("MONGO_URI is not defined");
   }
 
   await connectDatabase();
