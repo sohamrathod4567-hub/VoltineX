@@ -54,18 +54,91 @@ textarea {
   position: fixed;
   inset: 0;
   z-index: 30;
+  overflow: hidden;
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(circle at 50% 50%, rgba(192, 240, 255, 0.98) 0%, rgba(147, 221, 255, 0.94) 22%, rgba(97, 188, 255, 0.7) 48%, rgba(97, 188, 255, 0.08) 76%, transparent 100%);
+    radial-gradient(circle at 50% 18%, rgba(189, 240, 255, 0.88), rgba(115, 205, 255, 0.38) 32%, rgba(115, 205, 255, 0.06) 62%, transparent 100%),
+    linear-gradient(180deg, rgba(160, 228, 255, 0.28), rgba(160, 228, 255, 0.08) 38%, transparent 100%);
 }
 
 .landing-flash.is-active {
-  animation: thunder-flash 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: thunder-flash 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .landing-flash.is-hidden {
   opacity: 0;
+}
+
+.storm-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(174, 234, 255, 0.68), transparent 26%),
+    radial-gradient(circle at 50% 18%, rgba(188, 243, 255, 0.92), transparent 28%),
+    radial-gradient(circle at 80% 22%, rgba(174, 234, 255, 0.68), transparent 24%);
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+
+.thunder-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.thunder-bolt,
+.thunder-branch {
+  fill: none;
+  stroke: rgba(196, 246, 255, 0.98);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter:
+    drop-shadow(0 0 10px rgba(164, 229, 255, 0.95))
+    drop-shadow(0 0 24px rgba(117, 205, 255, 0.78))
+    drop-shadow(0 0 44px rgba(117, 205, 255, 0.58));
+  opacity: 0;
+}
+
+.thunder-bolt {
+  stroke-width: 8;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+}
+
+.thunder-branch {
+  stroke-width: 5;
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+}
+
+.landing-flash.is-active .storm-glow {
+  animation: storm-pulse 1.8s ease-out forwards;
+}
+
+.landing-flash.is-active .bolt-left {
+  animation: bolt-strike 1.8s ease-out forwards;
+}
+
+.landing-flash.is-active .bolt-center {
+  animation: bolt-strike 1.8s ease-out 0.08s forwards;
+}
+
+.landing-flash.is-active .bolt-right {
+  animation: bolt-strike 1.8s ease-out 0.14s forwards;
+}
+
+.landing-flash.is-active .branch-left {
+  animation: branch-strike 1.8s ease-out 0.12s forwards;
+}
+
+.landing-flash.is-active .branch-center {
+  animation: branch-strike 1.8s ease-out 0.2s forwards;
+}
+
+.landing-flash.is-active .branch-right {
+  animation: branch-strike 1.8s ease-out 0.16s forwards;
 }
 
 .navbar {
@@ -468,24 +541,108 @@ textarea {
     opacity: 0;
   }
 
-  8% {
+  6% {
     opacity: 1;
   }
 
-  14% {
-    opacity: 0.12;
+  15% {
+    opacity: 0.22;
   }
 
-  22% {
-    opacity: 0.92;
+  24% {
+    opacity: 0.94;
   }
 
-  34% {
+  36% {
     opacity: 0.18;
   }
 
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes storm-pulse {
+  0% {
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  18% {
+    opacity: 0.28;
+  }
+
+  28% {
+    opacity: 0.88;
+  }
+
+  46% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes bolt-strike {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 1400;
+  }
+
+  9% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  16% {
+    opacity: 0.3;
+  }
+
+  24% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0.16;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes branch-strike {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 240;
+  }
+
+  11% {
+    opacity: 0.96;
+    stroke-dashoffset: 0;
+  }
+
+  22% {
+    opacity: 0.22;
+  }
+
+  30% {
+    opacity: 0.92;
+  }
+
+  44% {
+    opacity: 0.12;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
   }
 }
 
