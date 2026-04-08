@@ -1,0 +1,52 @@
+:root {
+  color-scheme: light;
+  background: #fff;
+  color: #000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: #f7f7f7;
+  color: #000;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.panel {
+  width: min(560px, 100%);
+  padding: 32px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 18px;
+}
+
+h1 {
+  margin: 0 0 14px;
+  font-size: 2rem;
+}
+
+.subtitle {
+  margin: 0 0 22px;
+  color: #4a4a4a;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.status {
+  padding: 14px 16px;
+  border: 1px solid #eaeaea;
+  border-radius: 14px;
+  color: #000;
+  background: #f5f5f5;
+  font-weight: 500;
+}
