@@ -22,10 +22,6 @@ async function start() {
     throw new Error("MONGO_URI is not defined");
   }
 
-  if (!process.env.JWT_SECRET) {
-    throw new Error("JWT_SECRET is not defined");
-  }
-
   await connectDatabase();
   server.listen(port, () => {
     console.log(`Voltinex backend listening on port ${port}`);
