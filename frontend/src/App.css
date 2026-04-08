@@ -206,6 +206,27 @@ textarea {
   transform: translateY(-1px);
 }
 
+.dashboard-status-row {
+  align-items: center;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--black);
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--white);
+}
+
+.status-chip.is-muted {
+  border-color: var(--light-grey);
+  background: var(--white);
+  color: var(--grey);
+}
+
 .hero-aside {
   display: grid;
   gap: 14px;
@@ -323,6 +344,41 @@ textarea {
 .stat-label {
   margin: 0;
   color: var(--grey);
+}
+
+.readings-card {
+  display: grid;
+  gap: 18px;
+}
+
+.reading-list {
+  display: grid;
+  gap: 0;
+}
+
+.reading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--light-grey);
+}
+
+.reading-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.reading-name {
+  color: var(--grey);
+  font-size: 0.98rem;
+}
+
+.reading-number {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 
 .component-card {
