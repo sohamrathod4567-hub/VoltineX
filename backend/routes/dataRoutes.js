@@ -3,6 +3,11 @@ import Data from '../model/Data.js';
 
 const router = express.Router();
 
+function randomInRange(min, max, decimals = 1) {
+  const value = Math.random() * (max - min) + min;
+  return Number(value.toFixed(decimals));
+}
+
 router.get('/data', async (req, res) => {
   try {
     const data = await Data.find({}, { _id: 0 }).sort({ timestamp: -1 }).lean();
@@ -26,6 +31,22 @@ router.post('/data', async (req, res) => {
     res.status(201).json(record.toJSON());
   } catch (error) {
     res.status(500).json({ error: 'Failed to store transformer data' });
+  }
+});
+
+router.post('/simulate', async (req, res) => {
+  try {
+    const record = await Data.create({
+      voltage: randomInRange(210, 250),
+      current: randomInRange(5, 25),
+      temperature: randomInRange(30, 75)
+    });
+
+    req.app.get('io').emit('newData', record.toJSON());
+
+    res.status(201).json(record.toJSON());
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to simulate transformer data' });
   }
 });
 
