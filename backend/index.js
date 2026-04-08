@@ -1,3 +1,4 @@
+import "dotenv/config";
 import http from "http";
 import { Server } from "socket.io";
 import app, { connectDatabase } from "./server.js";
@@ -35,6 +36,10 @@ io.on("connection", (socket) => {
 async function start() {
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URI is not defined");
+  }
+
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET is not defined");
   }
 
   await connectDatabase();
