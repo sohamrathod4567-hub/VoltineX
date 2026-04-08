@@ -1,12 +1,33 @@
-import express from "express";
+import http from 'http';
+import { Server } from 'socket.io';
+import app, { connectDatabase } from './server.js';
 
-const app = express();
 const port = process.env.PORT || 4174;
-
-app.get("/api/status", (req, res) => {
-  res.json({ status: "ok" });
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*'
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Voltinex backend listening on port ${port}`);
+app.set('io', io);
+
+io.on('connection', (socket) => {
+  socket.on('disconnect', () => {});
+});
+
+async function start() {
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI is not defined');
+  }
+
+  await connectDatabase();
+  server.listen(port, () => {
+    console.log(`Voltinex backend listening on port ${port}`);
+  });
+}
+
+start().catch((error) => {
+  console.error(error);
+  process.exit(1);
 });
