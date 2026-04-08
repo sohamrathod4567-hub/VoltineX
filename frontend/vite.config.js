@@ -7,6 +7,10 @@ export default defineConfig({
     port: 4173,
     proxy: {
       "/api": "http://localhost:4174",
+      "/socket.io": {
+        target: "http://localhost:4174",
+        ws: true,
+      },
     },
   },
 });
