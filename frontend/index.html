@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,9 +10,806 @@
       rel="stylesheet"
     />
     <title>VoltineX</title>
+    <style>
+      :root {
+        --black: #000;
+        --dark-grey: #4a4a4a;
+        --grey: #888;
+        --light-grey: #eaeaea;
+        --white: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background: var(--white);
+        color: var(--black);
+        font-family: "Lexend", sans-serif;
+      }
+
+      a,
+      input,
+      textarea,
+      button {
+        font: inherit;
+        color: inherit;
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        padding: 24px;
+      }
+
+      .navbar,
+      .hero-card,
+      .content-card,
+      .stat-card,
+      .component-card,
+      .contact-card,
+      .member-card,
+      .contact-item {
+        border: 1px solid var(--light-grey);
+        border-radius: 28px;
+        background: var(--white);
+      }
+
+      .navbar {
+        position: sticky;
+        top: 24px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        width: min(1120px, 100%);
+        margin: 0 auto 24px;
+        padding: 16px 20px;
+      }
+
+      .brand-block {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .brand-mark {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .brand-copy {
+        margin: 0;
+        color: var(--grey);
+        font-size: 0.9rem;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .nav-link,
+      .primary-button,
+      .secondary-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        text-decoration: none;
+      }
+
+      .nav-link {
+        padding: 10px 16px;
+        border: 1px solid transparent;
+        color: var(--grey);
+      }
+
+      .nav-link.is-active,
+      .nav-link:hover,
+      .primary-button {
+        background: var(--black);
+        border-color: var(--black);
+        color: var(--white);
+      }
+
+      .page-shell {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+      }
+
+      .page {
+        display: grid;
+        gap: 22px;
+        margin-bottom: 22px;
+      }
+
+      .hero-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+        gap: 28px;
+        padding: 32px;
+      }
+
+      .content-card,
+      .stat-card,
+      .component-card,
+      .contact-card,
+      .member-card {
+        padding: 24px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        width: fit-content;
+        margin-bottom: 18px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--light-grey);
+        color: var(--dark-grey);
+        font-size: 0.84rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .hero-title,
+      .section-title {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 4.4rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+      }
+
+      .section-title {
+        font-size: clamp(1.7rem, 2.6vw, 2.8rem);
+      }
+
+      .hero-copy,
+      .section-copy,
+      .card-copy,
+      .contact-copy,
+      .member-copy {
+        margin: 0;
+        color: var(--grey);
+        line-height: 1.75;
+      }
+
+      .hero-copy {
+        max-width: 56ch;
+        font-size: 1rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .primary-button,
+      .secondary-button,
+      .status-chip {
+        min-height: 44px;
+        padding: 12px 18px;
+        border: 1px solid var(--light-grey);
+      }
+
+      .secondary-button,
+      .status-chip.is-muted {
+        background: var(--white);
+        color: var(--grey);
+      }
+
+      .dashboard-status-row {
+        align-items: center;
+      }
+
+      .status-chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        background: var(--black);
+        border-color: var(--black);
+        color: var(--white);
+      }
+
+      .hero-aside,
+      .preview-grid,
+      .readings-card,
+      .chart-card,
+      .contact-rail,
+      .member-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .preview-panel {
+        display: grid;
+        gap: 14px;
+        min-height: 100%;
+        padding: 22px;
+        border-radius: 22px;
+        background: var(--black);
+        color: var(--white);
+      }
+
+      .preview-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--light-grey);
+        font-size: 0.9rem;
+      }
+
+      .preview-grid {
+        gap: 10px;
+      }
+
+      .preview-tile {
+        padding: 16px;
+        border: 1px solid var(--dark-grey);
+        border-radius: 18px;
+      }
+
+      .preview-label {
+        margin: 0 0 8px;
+        color: var(--light-grey);
+        font-size: 0.84rem;
+      }
+
+      .preview-value {
+        margin: 0;
+        font-size: 1.7rem;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+      }
+
+      .section-grid,
+      .component-grid,
+      .contact-grid,
+      .stats-grid,
+      .chart-grid,
+      .member-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .section-grid,
+      .chart-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stats-grid,
+      .member-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .component-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .contact-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+
+      .card-kicker,
+      .member-kicker {
+        margin: 0 0 10px;
+        color: var(--grey);
+        font-size: 0.82rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .card-title,
+      .member-title {
+        margin: 0 0 10px;
+        font-size: 1.25rem;
+        letter-spacing: -0.03em;
+      }
+
+      .feature-list {
+        display: grid;
+        gap: 12px;
+        margin: 18px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .feature-list li,
+      .reading-row {
+        border-top: 1px solid var(--light-grey);
+      }
+
+      .feature-list li {
+        padding-top: 12px;
+        color: var(--dark-grey);
+      }
+
+      .stat-value {
+        margin: 18px 0 8px;
+        font-size: clamp(2rem, 5vw, 3rem);
+        letter-spacing: -0.06em;
+      }
+
+      .stat-label {
+        margin: 0;
+        color: var(--grey);
+      }
+
+      .chart-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .chart-note {
+        color: var(--grey);
+        font-size: 0.9rem;
+      }
+
+      .chart-shell {
+        height: 260px;
+        padding: 18px 14px 10px;
+        border: 1px solid var(--light-grey);
+        border-radius: 22px;
+      }
+
+      .chart-svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .reading-list {
+        display: grid;
+      }
+
+      .reading-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 0;
+      }
+
+      .reading-row:first-child {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .reading-name {
+        color: var(--grey);
+        font-size: 0.98rem;
+      }
+
+      .reading-number {
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+      }
+
+      .component-card {
+        min-height: 220px;
+      }
+
+      .member-card {
+        min-height: 200px;
+      }
+
+      .contact-card form,
+      .field {
+        display: grid;
+        gap: 14px;
+      }
+
+      .field {
+        gap: 8px;
+      }
+
+      .field label {
+        font-size: 0.92rem;
+        color: var(--dark-grey);
+      }
+
+      .field input,
+      .field textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid var(--light-grey);
+        border-radius: 18px;
+        background: var(--white);
+      }
+
+      .field textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      .contact-item {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .contact-item h3,
+      .contact-item p {
+        margin: 0;
+      }
+
+      .contact-item h3 {
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .contact-item p {
+        color: var(--grey);
+        line-height: 1.65;
+      }
+
+      .site-footer {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        padding: 18px 20px 8px;
+        color: var(--grey);
+        font-size: 0.9rem;
+        letter-spacing: 0.08em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 920px) {
+        .navbar,
+        .hero-card,
+        .section-grid,
+        .stats-grid,
+        .component-grid,
+        .contact-grid,
+        .chart-grid,
+        .member-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .navbar {
+          position: static;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .app-shell {
+          padding: 16px;
+        }
+
+        .navbar,
+        .hero-card,
+        .content-card,
+        .stat-card,
+        .component-card,
+        .contact-card,
+        .member-card {
+          padding: 20px;
+          border-radius: 22px;
+        }
+
+        .nav-links {
+          width: 100%;
+        }
+
+        .nav-link {
+          flex: 1 1 calc(50% - 10px);
+          text-align: center;
+        }
+
+        .site-footer {
+          padding-top: 8px;
+          font-size: 0.82rem;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div class="app-shell">
+      <header class="navbar">
+        <div class="brand-block">
+          <p class="brand-mark">VoltineX</p>
+          <p class="brand-copy">Transformer monitoring interface</p>
+        </div>
+        <nav class="nav-links" aria-label="Primary">
+          <a class="nav-link is-active" href="#dashboard">Dashboard</a>
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#components">Components</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main class="page-shell">
+        <section class="page" id="dashboard">
+          <div class="hero-card">
+            <div>
+              <span class="eyebrow">Dashboard</span>
+              <h1 class="hero-title">Clear monitoring for critical transformer systems.</h1>
+              <p class="hero-copy">
+                VoltineX gives teams a focused view of electrical health with a clean interface
+                for real-time voltage, current, and temperature visibility.
+              </p>
+              <div class="hero-actions dashboard-status-row">
+                <div class="status-chip">Realtime updates on</div>
+                <div class="status-chip is-muted">No records available</div>
+              </div>
+            </div>
+
+            <aside class="hero-aside">
+              <div class="preview-panel">
+                <div class="preview-header">
+                  <span>Live Preview</span>
+                  <span>Waiting</span>
+                </div>
+                <div class="preview-grid">
+                  <div class="preview-tile">
+                    <p class="preview-label">Voltage</p>
+                    <p class="preview-value">--</p>
+                  </div>
+                  <div class="preview-tile">
+                    <p class="preview-label">Current</p>
+                    <p class="preview-value">--</p>
+                  </div>
+                  <div class="preview-tile">
+                    <p class="preview-label">Temperature</p>
+                    <p class="preview-value">--</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <p class="card-kicker">Reading</p>
+              <h2 class="stat-value">--</h2>
+              <p class="stat-label">Voltage</p>
+            </article>
+            <article class="stat-card">
+              <p class="card-kicker">Reading</p>
+              <h2 class="stat-value">--</h2>
+              <p class="stat-label">Current</p>
+            </article>
+            <article class="stat-card">
+              <p class="card-kicker">Reading</p>
+              <h2 class="stat-value">--</h2>
+              <p class="stat-label">Temperature</p>
+            </article>
+            <article class="stat-card">
+              <p class="card-kicker">Status</p>
+              <h2 class="stat-value">Live</h2>
+              <p class="stat-label">System</p>
+            </article>
+          </div>
+
+          <div class="chart-grid">
+            <article class="content-card chart-card">
+              <div class="chart-head">
+                <p class="card-kicker">Voltage</p>
+                <span class="chart-note">Last 20 readings</span>
+              </div>
+              <div class="chart-shell">
+                <svg class="chart-svg" viewBox="0 0 420 220" role="img" aria-label="Voltage trend">
+                  <path d="M24 28H396M24 82H396M24 136H396M24 190H396" fill="none" stroke="#eaeaea" stroke-width="1" />
+                  <path d="M24 182L86 170L148 154L210 160L272 124L334 112L396 74" fill="none" stroke="#000" stroke-width="3" />
+                </svg>
+              </div>
+            </article>
+
+            <article class="content-card chart-card">
+              <div class="chart-head">
+                <p class="card-kicker">Current</p>
+                <span class="chart-note">Last 20 readings</span>
+              </div>
+              <div class="chart-shell">
+                <svg class="chart-svg" viewBox="0 0 420 220" role="img" aria-label="Current trend">
+                  <path d="M24 28H396M24 82H396M24 136H396M24 190H396" fill="none" stroke="#eaeaea" stroke-width="1" />
+                  <path d="M24 170L86 166L148 142L210 150L272 134L334 96L396 102" fill="none" stroke="#4a4a4a" stroke-width="3" />
+                </svg>
+              </div>
+            </article>
+          </div>
+
+          <div class="content-card readings-card">
+            <p class="card-kicker">Latest Data</p>
+            <div class="reading-list">
+              <div class="reading-row">
+                <span class="reading-name">Voltage</span>
+                <span class="reading-number">--</span>
+              </div>
+              <div class="reading-row">
+                <span class="reading-name">Current</span>
+                <span class="reading-number">--</span>
+              </div>
+              <div class="reading-row">
+                <span class="reading-name">Temperature</span>
+                <span class="reading-number">--</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="about">
+          <div class="content-card">
+            <span class="eyebrow">About</span>
+            <h1 class="section-title">Built to simplify transformer monitoring at a glance.</h1>
+            <p class="section-copy">
+              VoltineX is designed for IoT-based transformer monitoring, helping operators stay
+              aware of system conditions with focused visibility and a dashboard that reduces noise.
+            </p>
+          </div>
+
+          <div class="section-grid">
+            <article class="content-card">
+              <p class="card-kicker">Purpose</p>
+              <h2 class="card-title">Operational clarity</h2>
+              <p class="card-copy">
+                The interface prioritizes essential readings so teams can review asset condition
+                quickly and consistently.
+              </p>
+            </article>
+
+            <article class="content-card">
+              <p class="card-kicker">Approach</p>
+              <h2 class="card-title">Minimal by design</h2>
+              <p class="card-copy">
+                Every section is intentionally restrained, using simple typography, soft contrast,
+                and direct content structure.
+              </p>
+            </article>
+          </div>
+
+          <div class="member-grid">
+            <article class="member-card">
+              <p class="member-kicker">VoltineX Team</p>
+              <h2 class="member-title">Monitoring</h2>
+              <p class="member-copy">
+                Focused visibility across transformer conditions with a dashboard that reduces noise.
+              </p>
+            </article>
+            <article class="member-card">
+              <p class="member-kicker">VoltineX Team</p>
+              <h2 class="member-title">Interface</h2>
+              <p class="member-copy">
+                Clean layouts and consistent spacing support quick reviews of essential system data.
+              </p>
+            </article>
+            <article class="member-card">
+              <p class="member-kicker">VoltineX Team</p>
+              <h2 class="member-title">Sensing</h2>
+              <p class="member-copy">
+                The product story connects field readings to a simple view that feels understandable.
+              </p>
+            </article>
+            <article class="member-card">
+              <p class="member-kicker">VoltineX Team</p>
+              <h2 class="member-title">Deployment</h2>
+              <p class="member-copy">
+                The system remains intentionally simple and ready for future backend integration.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" id="components">
+          <div class="content-card">
+            <span class="eyebrow">Components</span>
+            <h1 class="section-title">A simple structure behind each monitoring cycle.</h1>
+            <p class="section-copy">
+              VoltineX groups its product story into clear parts, from sensing to display, so the
+              full system feels understandable without unnecessary detail.
+            </p>
+          </div>
+
+          <div class="component-grid">
+            <article class="component-card">
+              <p class="card-kicker">Module</p>
+              <h2 class="card-title">Sensor Layer</h2>
+              <p class="card-copy">
+                Reads voltage, current, and temperature from field-connected devices.
+              </p>
+              <ul class="feature-list">
+                <li>Focused role within the monitoring workflow</li>
+                <li>Readable presentation with minimal visual noise</li>
+                <li>Prepared for future real-time integration</li>
+              </ul>
+            </article>
+
+            <article class="component-card">
+              <p class="card-kicker">Module</p>
+              <h2 class="card-title">Processing Layer</h2>
+              <p class="card-copy">
+                Prepares incoming measurements for monitoring and system review.
+              </p>
+              <ul class="feature-list">
+                <li>Focused role within the monitoring workflow</li>
+                <li>Readable presentation with minimal visual noise</li>
+                <li>Prepared for future real-time integration</li>
+              </ul>
+            </article>
+
+            <article class="component-card">
+              <p class="card-kicker">Module</p>
+              <h2 class="card-title">Dashboard Layer</h2>
+              <p class="card-copy">
+                Presents transformer health in a clear and compact interface.
+              </p>
+              <ul class="feature-list">
+                <li>Focused role within the monitoring workflow</li>
+                <li>Readable presentation with minimal visual noise</li>
+                <li>Prepared for future real-time integration</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" id="contact">
+          <div class="content-card">
+            <span class="eyebrow">Contact</span>
+            <h1 class="section-title">Start a conversation around deployment and monitoring needs.</h1>
+            <p class="section-copy">
+              This contact page is intentionally simple and ready for future backend integration.
+            </p>
+          </div>
+
+          <div class="contact-grid">
+            <article class="contact-card">
+              <form>
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" name="name" type="text" placeholder="Your name" />
+                </div>
+
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" placeholder="your@email.com" />
+                </div>
+
+                <div class="field">
+                  <label for="message">Message</label>
+                  <textarea id="message" name="message" placeholder="Tell us about your project"></textarea>
+                </div>
+
+                <button type="button" class="primary-button">Send Message</button>
+              </form>
+            </article>
+
+            <aside class="contact-rail">
+              <div class="contact-item">
+                <h3>Office</h3>
+                <p>VoltineX Systems Lab</p>
+                <p>Monitoring solutions for modern electrical infrastructure.</p>
+              </div>
+              <div class="contact-item">
+                <h3>Email</h3>
+                <p>contact@voltinex.example</p>
+              </div>
+              <div class="contact-item">
+                <h3>Availability</h3>
+                <p>Monday to Friday</p>
+                <p>09:00 to 18:00</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">MADE BY : VoltineX Team</footer>
+    </div>
   </body>
 </html>
